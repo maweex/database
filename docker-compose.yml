@@ -1,0 +1,24 @@
+version: '3.9'
+
+services: 
+    flask_app:
+        build: .
+        ports: 
+            - 5000:5000
+        volumes: 
+            - .:/usr/src/app
+        environment: 
+            - FLASK_ENV=development
+            - FLASK_APP=app.py
+            - PYTHONUNBUFFERED=1
+            
+    database:
+        build: 
+            context: ./database
+            dockerfile: Dockerfile
+        environment: 
+            - POSTGRES_PASSWORD=autonoma
+        ports: 
+            - 5433:5432
+        volumes:
+            - .postgres-data:/var/lib/postgresql/data
